@@ -1,11 +1,12 @@
-#Inlinehook库的介绍
+# Inlinehook库的介绍
 1. 支持用户和内核两种模式
 2. 内核在hook时候挂起了其他cpu，降低挂钩高频函数蓝屏问题
 3. 提供函数hook和寄存器hook两种方式
 
 
-#函数hook使用范例以hook NtOpenThread为例子：
+# 函数hook使用范例以hook NtOpenThread为例子：
 
+``` stata
 //第一步定义NtOpenThread函数指针类型
 typedef NTSTATUS (*fpTypeNtOpenThread)(
 	OUT PHANDLE ThreadHandle,
@@ -38,10 +39,11 @@ KdPrint(("NtOpenThread 安装结果:%d\n", bInstallRet));
 
 //第五步当驱动退出的时候，卸载hook
 UninstallInlineHookFunction(&g_inlineNtOpenThread);
+```
 
+# 寄存器过滤使用范例，以hook NtOpenThread为例子：
 
-#寄存器过滤使用范例，以hook NtOpenThread为例子：
-
+``` x86asm
 //第一步先用ida查看NtOpenThread确定好我们要hook的位置，假设我们hook的位置是：0065FDA2，相对于函数开始地址偏移为:0x1B
 PAGE:0065FD87 ; Exported entry 1113. NtOpenThread
 PAGE:0065FD87
@@ -96,14 +98,5 @@ bInstallRet = InstallRegFilterInlineHook(&g_inlineRegfilterSt);
 KdPrint(("NtOpenThread 寄存器过滤安装结果:%d\n", bInstallRet));
 //第四步当程序退出时候卸载hook
 UninstallRegFilterInlineHook(g_inlineRegfilterSt);
+```
 
-
-
-
-
-  
-  
-
- 
-  
-  
