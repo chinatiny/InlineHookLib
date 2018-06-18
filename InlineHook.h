@@ -1,6 +1,5 @@
 #pragma once
-#include "AntiCheatDriver.h"
-#define  _KERNEL_HOOK
+
 
 
 #ifdef __cplusplus
@@ -16,53 +15,53 @@ extern "C" {
     #define  BACKUPCODE_SIZE  0x200
 
 
-	//////////////////////////////////////////////////////////////////Õë¶Ôº¯ÊıµÄHOOK Begin////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////é’ˆå¯¹å‡½æ•°çš„HOOK Begin////////////////////////////////////////////////////////////////////////////
 
 	typedef  struct  _InlineHookFunctionSt
 	{
-		PVOID lpHookAddr;   //Ô­Ê¼±»hookµÄµØÖ·
-		PVOID pNewHookAddr; //±»hookºó£¬²»ÄÜÖ±½ÓÊ¹ÓÃÔ­Ê¼µØÖ·£¬Èç¹ûĞèÒªµ÷ÓÃÔ­À´µÄº¯ÊıĞèÒªÊ¹ÓÃÕâ¸öµØÖ·
-		PVOID lpFakeFuncAddr;   //É½Õ¯º¯ÊıµØÖ·
-		int nOpcodeMove; //´ÓlpHookAddrµã¿ªÊ¼¼ÆËã£¬ĞèÒªÒÆ¶¯¶àÉÙÖ¸Áîµ½movedOpCode
-		BYTE backupCode[BACKUPCODE_SIZE];  //µ±hook»Ö¸´µÄÊ±ºò,ÓÃÀ´»¹Ô­µÄÖ¸Áî
-		BOOL bHookSucc; //Ö´ĞĞÊÇ·ñ³É¹¦
+		PVOID lpHookAddr;   //åŸå§‹è¢«hookçš„åœ°å€
+		PVOID pNewHookAddr; //è¢«hookåï¼Œä¸èƒ½ç›´æ¥ä½¿ç”¨åŸå§‹åœ°å€ï¼Œå¦‚æœéœ€è¦è°ƒç”¨åŸæ¥çš„å‡½æ•°éœ€è¦ä½¿ç”¨è¿™ä¸ªåœ°å€
+		PVOID lpFakeFuncAddr;   //å±±å¯¨å‡½æ•°åœ°å€
+		int nOpcodeMove; //ä»lpHookAddrç‚¹å¼€å§‹è®¡ç®—ï¼Œéœ€è¦ç§»åŠ¨å¤šå°‘æŒ‡ä»¤åˆ°movedOpCode
+		BYTE backupCode[BACKUPCODE_SIZE];  //å½“hookæ¢å¤çš„æ—¶å€™,ç”¨æ¥è¿˜åŸçš„æŒ‡ä»¤
+		BOOL bHookSucc; //æ‰§è¡Œæ˜¯å¦æˆåŠŸ
 	}InlineHookFunctionSt;
 
 
 	/*
-	    º¯ÊıËµÃ÷£º ¶Ôº¯Êı½øĞĞ¹ıÂËhook
-	    ²ÎÊıËµÃ÷£º
-	        inlineSt£º inline hookµÄ½á¹¹Ìå,Ö±½Ó´«ÈëÒ»¸ö½á¹¹ÌåµÄÖ¸Õë¼´¿É£¬ÆäËû³õÊ¼»¯º¯Êı»á°ïÎÒÃÇÌî³ä
-	        lpHookAddr£º ±»hookº¯ÊıµØÖ·
-	        lpFakeFuncAddr£º É½Õ¯º¯ÊıµØÖ·
+	    å‡½æ•°è¯´æ˜ï¼š å¯¹å‡½æ•°è¿›è¡Œè¿‡æ»¤hook
+	    å‚æ•°è¯´æ˜ï¼š
+	        inlineStï¼š inline hookçš„ç»“æ„ä½“,ç›´æ¥ä¼ å…¥ä¸€ä¸ªç»“æ„ä½“çš„æŒ‡é’ˆå³å¯ï¼Œå…¶ä»–åˆå§‹åŒ–å‡½æ•°ä¼šå¸®æˆ‘ä»¬å¡«å……
+	        lpHookAddrï¼š è¢«hookå‡½æ•°åœ°å€
+	        lpFakeFuncAddrï¼š å±±å¯¨å‡½æ•°åœ°å€
 	*/
 	BOOL InitInlineHookFunction(OUT InlineHookFunctionSt* inlineSt, IN PVOID lpHookAddr, IN PVOID lpFakeFuncAddr);
 
 
 
 	/*
-	    º¯ÊıËµÃ÷£º °²×°º¯Êıhook
-	    ²ÎÊıËµÃ÷£º
-	    inlineSt£º Ö±½Ó´«ÈëInitInlineHook³õÊ¼»¯µÄinlineSt¼´¿É
+	    å‡½æ•°è¯´æ˜ï¼š å®‰è£…å‡½æ•°hook
+	    å‚æ•°è¯´æ˜ï¼š
+	    inlineStï¼š ç›´æ¥ä¼ å…¥InitInlineHookåˆå§‹åŒ–çš„inlineStå³å¯
 	*/
 	BOOL InstallInlineHookFunction(IN InlineHookFunctionSt* inlineSt);
 
 
 	/*
-	    º¯ÊıËµÃ÷£ºĞ¶ÔØº¯Êı¹ıÂËhook
-	    ²ÎÊıËµÃ÷£º
-	    inlineSt£º Ö±½Ó´«ÈëInstallInlineHookÊ¹ÓÃµÄinlineSt¼´¿É
+	    å‡½æ•°è¯´æ˜ï¼šå¸è½½å‡½æ•°è¿‡æ»¤hook
+	    å‚æ•°è¯´æ˜ï¼š
+	    inlineStï¼š ç›´æ¥ä¼ å…¥InstallInlineHookä½¿ç”¨çš„inlineStå³å¯
 	*/
 	VOID UninstallInlineHookFunction(IN InlineHookFunctionSt* inlineSt);
-	//////////////////////////////////////////////////////////////////Õë¶Ôº¯ÊıµÄHOOK End/////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////é’ˆå¯¹å‡½æ•°çš„HOOK End/////////////////////////////////////////////////////////////////////////////
 
 
 
 
-	//////////////////////////////////////////////////////////////////Õë¶Ô¼Ä´æÆ÷µÄHOOK Begin///////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////é’ˆå¯¹å¯„å­˜å™¨çš„HOOK Begin///////////////////////////////////////////////////////////////////////
 	/*
-	    1. hookº¯ÊıÖ´ĞĞµÄÊ±ºò£¬¸÷¸ö¼Ä´æÆ÷µÄ»·¾³£¬¿ÉÒÔÍ¨¹ıÖ±½ÓĞŞ¸ÄÕâĞ©Öµ¶Ô¼Ä´æÆ÷×ö¹ıÂË
-	    2. ¿ÉÒÔ¸ù¾İesp¶Ô²ÎÊı½øĞĞ¹ıÂË
+	    1. hookå‡½æ•°æ‰§è¡Œçš„æ—¶å€™ï¼Œå„ä¸ªå¯„å­˜å™¨çš„ç¯å¢ƒï¼Œå¯ä»¥é€šè¿‡ç›´æ¥ä¿®æ”¹è¿™äº›å€¼å¯¹å¯„å­˜å™¨åšè¿‡æ»¤
+	    2. å¯ä»¥æ ¹æ®espå¯¹å‚æ•°è¿›è¡Œè¿‡æ»¤
 	*/
 	typedef struct _HookContex
 	{
@@ -77,27 +76,27 @@ extern "C" {
 		ULONG uEax;
 	}HookContex;
 
-	//hookº¯ÊıµÄÖ¸¶¨µÄÀàĞÍ
+	//hookå‡½æ•°çš„æŒ‡å®šçš„ç±»å‹
 	typedef void(_stdcall *fpTypeFilterReg)(HookContex* hookContex);
 	typedef  struct  _InlineHookRegFilterSt
 	{
-		PVOID lpHookAddr;   //±»hookµÄµØÖ·
-		int nOpcodeMove; //´ÓlpHookAddrµã¿ªÊ¼¼ÆËã£¬ĞèÒªÒÆ¶¯¶àÉÙÖ¸Áîµ½movedOpCode
-		BYTE backupCode[BACKUPCODE_SIZE];  //µ±hook»Ö¸´µÄÊ±ºò,ÓÃÀ´»¹Ô­µÄÖ¸Áî
+		PVOID lpHookAddr;   //è¢«hookçš„åœ°å€
+		int nOpcodeMove; //ä»lpHookAddrç‚¹å¼€å§‹è®¡ç®—ï¼Œéœ€è¦ç§»åŠ¨å¤šå°‘æŒ‡ä»¤åˆ°movedOpCode
+		BYTE backupCode[BACKUPCODE_SIZE];  //å½“hookæ¢å¤çš„æ—¶å€™,ç”¨æ¥è¿˜åŸçš„æŒ‡ä»¤
 		//
-		BYTE*  hookEntry;   //hookÈë¿Ú
-		BYTE* movedOpCode; //ÒÆ¶¯µÄopcodeµÄ»º³åÇø
-		fpTypeFilterReg lpFilterReg;  //¶Ô¼Ä´æÆ÷½øĞĞhookµÄ»Øµ÷º¯Êı
-		BOOL bHookSucc; //hookÊÇ·ñ³É¹¦
+		BYTE*  hookEntry;   //hookå…¥å£
+		BYTE* movedOpCode; //ç§»åŠ¨çš„opcodeçš„ç¼“å†²åŒº
+		fpTypeFilterReg lpFilterReg;  //å¯¹å¯„å­˜å™¨è¿›è¡Œhookçš„å›è°ƒå‡½æ•°
+		BOOL bHookSucc; //hookæ˜¯å¦æˆåŠŸ
 	}InlineRegFilterHookSt;
 
 
 	/*
-	º¯ÊıËµÃ÷£º ¶Ô¼Ä´æÆ÷½øĞĞ¹ıÂËhook
-	²ÎÊıËµÃ÷£º
-		inlineSt£º inline hookµÄ½á¹¹Ìå,Ö±½Ó´«ÈëÒ»¸ö½á¹¹ÌåµÄÖ¸Õë¼´¿É£¬ÆäËû³õÊ¼»¯º¯Êı»á°ïÎÒÃÇÌî³ä
-		lpHookAddr£º ÈÎÒâ»ã±àµØÖ·¿ªÊ¼µÄµØ·½
-		lpNewProc£º ĞÂµÄº¯ÊıµØÖ·
+	å‡½æ•°è¯´æ˜ï¼š å¯¹å¯„å­˜å™¨è¿›è¡Œè¿‡æ»¤hook
+	å‚æ•°è¯´æ˜ï¼š
+		inlineStï¼š inline hookçš„ç»“æ„ä½“,ç›´æ¥ä¼ å…¥ä¸€ä¸ªç»“æ„ä½“çš„æŒ‡é’ˆå³å¯ï¼Œå…¶ä»–åˆå§‹åŒ–å‡½æ•°ä¼šå¸®æˆ‘ä»¬å¡«å……
+		lpHookAddrï¼š ä»»æ„æ±‡ç¼–åœ°å€å¼€å§‹çš„åœ°æ–¹
+		lpNewProcï¼š æ–°çš„å‡½æ•°åœ°å€
 	*/
 	BOOL InitRegFilterInlineHook(OUT InlineRegFilterHookSt* inlineSt, IN PVOID lpHookAddr, IN fpTypeFilterReg lpNewProc);
 
@@ -105,21 +104,21 @@ extern "C" {
 
 
 	/*
-	º¯ÊıËµÃ÷£º °²×°¼Ä´æÆ÷¹ıÂËhook
-	²ÎÊıËµÃ÷£º
-		inlineSt£º Ö±½Ó´«ÈëInitInlineHook³õÊ¼»¯µÄinlineSt¼´¿É
+	å‡½æ•°è¯´æ˜ï¼š å®‰è£…å¯„å­˜å™¨è¿‡æ»¤hook
+	å‚æ•°è¯´æ˜ï¼š
+		inlineStï¼š ç›´æ¥ä¼ å…¥InitInlineHookåˆå§‹åŒ–çš„inlineStå³å¯
 	*/
 	BOOL InstallRegFilterInlineHook(IN InlineRegFilterHookSt* inlineSt);
 
 
 	/*
-	º¯ÊıËµÃ÷£ºĞ¶ÔØ¼Ä´æÆ÷¹ıÂËhook
-	²ÎÊıËµÃ÷£º
-	    inlineSt£º Ö±½Ó´«ÈëInstallInlineHookÊ¹ÓÃµÄinlineSt¼´¿É
+	å‡½æ•°è¯´æ˜ï¼šå¸è½½å¯„å­˜å™¨è¿‡æ»¤hook
+	å‚æ•°è¯´æ˜ï¼š
+	    inlineStï¼š ç›´æ¥ä¼ å…¥InstallInlineHookä½¿ç”¨çš„inlineStå³å¯
 	*/
 	VOID UninstallRegFilterInlineHook(IN InlineRegFilterHookSt* inlineSt);
 
-	//////////////////////////////////////////////////////////////////Õë¶Ô¼Ä´æÆ÷µÄHOOK End/////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////é’ˆå¯¹å¯„å­˜å™¨çš„HOOK End/////////////////////////////////////////////////////////////////////
 
 
 
