@@ -97,6 +97,6 @@ InitRegFilterInlineHook(&g_inlineRegfilterSt, (LVOID)((SIZE_T)pfnNtOpenThread+0X
 bInstallRet = InstallRegFilterInlineHook(&g_inlineRegfilterSt);
 KdPrint(("NtOpenThread 寄存器过滤安装结果:%d\n", bInstallRet));
 //第四步当程序退出时候卸载hook
-UninstallRegFilterInlineHook(g_inlineRegfilterSt);
+UninstallRegFilterInlineHook(&g_inlineRegfilterSt);
 ```
 
